@@ -1,4 +1,4 @@
-git package com.example.textwatcherversion3
+ package com.example.textwatcherversion3
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
