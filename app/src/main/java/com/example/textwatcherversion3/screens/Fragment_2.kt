@@ -11,9 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.textwatcherversion3.Car
-import com.example.textwatcherversion3.CarAdapter
-import com.example.textwatcherversion3.MainActivity
+import com.example.textwatcherversion3.*
 import com.example.textwatcherversion3.databinding.Fragment2Binding
 
 
@@ -36,10 +34,11 @@ class Fragment_2 : Fragment() {
 //        binding.displayMessage.text=displayMessage
 //        val adapter = CarAdapter(MainActivity, dataList)
 //        init()
-        val dataList = ArrayList<Car>()
+        val dataList = ArrayList<AdapterModel>()
         for(i in 0..20){
-            if(CarAdapter.VIEW_TYPE_ONE==1) dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "MB Truck"))
-            if(CarAdapter.VIEW_TYPE_TWO==2) dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "Honda Civic"))
+             dataList.add(AdapterModel.CarModel(car = Car(1,"MB")))
+             dataList.add(AdapterModel.ManualCarModel(manualCar = ManualCar("MB means Mercedes Benz")))
+
         }
 //dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "1. Hi! I am in View 1"))
 //dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "2. Hi! I am in View 2"))
@@ -53,18 +52,18 @@ class Fragment_2 : Fragment() {
 //dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "10. Hi! I am in View 10"))
 //dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "11. Hi! I am in View 11"))
 //dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "12. Hi! I am in View 12"))
-        val adapter=CarAdapter(binding.root.context)
+        val adapter=CarAdapter(binding.root.context,dataList)
         recyclerView=binding.rcView
         recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
         recyclerView.adapter = adapter
         var itemFrag:DialogFragment=ItemFrag()
         adapter.onItemClick={
             val bundle =Bundle()
-            bundle.putString("message",dataList[adapter.getIndex()].description)
-            println(bundle.putString("message", dataList[adapter.getIndex()].description))
+//            bundle.putString("message",dataList[adapter.getIndex()].description)
+//            println(bundle.putString("message", dataList[adapter.getIndex()].description))
             itemFrag.arguments=bundle
             itemFrag.show(childFragmentManager,"")
-            Log.d("LOG",dataList[adapter.getIndex()].description)
+//            Log.d("LOG",dataList[adapter.getIndex()].description)
         }
         return binding.root
     }

@@ -12,7 +12,7 @@ import com.example.textwatcherversion3.databinding.ManualCarItemBinding
 import java.lang.IllegalStateException
 
 
-class CarAdapter(context:Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CarAdapter(context:Context,arrayList: ArrayList<AdapterModel>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val VIEW_TYPE_ONE = 1
         const val VIEW_TYPE_TWO = 2
@@ -48,7 +48,7 @@ class CarAdapter(context:Context): RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
         fun onBindView(item: AdapterModel) {
-            val recyclerViewModel = arrayList[position]
+            val recyclerViewModel = arrayList[adapterPosition]
             message.text = recyclerViewModel.toString()
         }
 
@@ -64,8 +64,8 @@ class CarAdapter(context:Context): RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
         fun onBindView(item: AdapterModel) {
-            val recyclerViewModel = arrayList[position]
-            message.text = (arrayList[position] as Car).toString()
+            val recyclerViewModel = arrayList[adapterPosition]
+            message.text = (arrayList[adapterPosition] as Car).toString()
             imageView.setImageResource(R.drawable.pc2)
         }
     }
