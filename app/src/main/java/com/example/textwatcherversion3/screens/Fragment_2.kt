@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,7 +57,13 @@ class Fragment_2 : Fragment() {
         recyclerView=binding.rcView
         recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
         recyclerView.adapter = adapter
+        var itemFrag:DialogFragment=ItemFrag()
         adapter.onItemClick={
+            val bundle =Bundle()
+            bundle.putString("message",dataList[adapter.getIndex()].description)
+            println(bundle.putString("message", dataList[adapter.getIndex()].description))
+            itemFrag.arguments=bundle
+            itemFrag.show(childFragmentManager,"")
             Log.d("LOG",dataList[adapter.getIndex()].description)
         }
         return binding.root
