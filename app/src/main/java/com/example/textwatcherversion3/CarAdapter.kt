@@ -1,14 +1,27 @@
 package com.example.textwatcherversion3
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textwatcherversion3.databinding.CarItemBinding
 import com.example.textwatcherversion3.databinding.ManualCarItemBinding
 
 
-class CarAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CarAdapter(context:Context,list: ArrayList<Car>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object {
+        const val VIEW_TYPE_ONE = 1
+        const val VIEW_TYPE_TWO = 2
+    }
+    private val context: Context = context
+    var carlist: ArrayList<Car> = list
+    var onItemClick: ((Car) -> Unit)? = null
+
+
+
     private var index: Int =1
     var onCarClickListener: OnCarClickListener? = null
     fun getIndex(): Int {
@@ -21,73 +34,71 @@ class CarAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
 
-    val carrList = ArrayList<Car>()
+    private inner class CarHolder0(item: View) :
+        RecyclerView.ViewHolder(item){
+        var message: TextView = itemView.findViewById(R.id.textView)
+        var imageView:ImageView=itemView.findViewById(R.id.imageItem1)
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(carlist[adapterPosition])
+            }
+        }
+        fun bind(position: Int) {
+            val recyclerViewModel = carlist[position]
+            message.text = recyclerViewModel.description
+            imageView.setImageResource(R.drawable.pc3)
 
-    class CarHolder0(item: View) : RecyclerView.ViewHolder(item), CarHolder{
-        val binding = CarItemBinding.bind(item)
-        override fun bind(car:Car){
-            println(car.imageIndex)
-            binding.im.setImageResource(MassCar.imageIdList[car.imageIndex!!])
-            binding.tvTitle.text=car.title
+
         }
 
     }
-    interface CarHolder{
-        fun bind(car:Car)
-    }
 
-    class CarHolder2(item: View) : RecyclerView.ViewHolder(item),CarHolder {
-        val bindingManual = ManualCarItemBinding.bind(item)
-        override fun bind(car: Car) {
-            bindingManual.tvManual.text = car.description
+    private inner class CarHolder1(item: View) :
+        RecyclerView.ViewHolder(item) {
+        var message: TextView = itemView.findViewById(R.id.textView)
+        var imageView:ImageView=itemView.findViewById(R.id.imageItem2)
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(carlist[adapterPosition])
+            }
+        }
+        fun bind(position: Int) {
+            val recyclerViewModel = carlist[position]
+            message.text = recyclerViewModel.description
+            imageView.setImageResource(R.drawable.pc2)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-            if(getItemViewType(viewType)==0) {
-                val view =
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.car_item, parent, false)
-                view.setOnClickListener {
-                    onCarClickListener?.onCarClick(carrList[index])
-                }
-
-                return CarHolder0(view)
-            }
-
-                val view =
-                    LayoutInflater.from(parent.context)
-                        .inflate(R.layout.manual_car_item, parent, false)
-                return CarHolder2(view)
+        if (viewType == VIEW_TYPE_ONE) {
+            return CarHolder0(
+                LayoutInflater.from(context).inflate(R.layout.item_view_1, parent, false)
+            )
+        }
+        return CarHolder1(
+            LayoutInflater.from(context).inflate(R.layout.item_view_2, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val index=getIndex()
-        println(holder.javaClass)
-        when(getItemViewType(position)) {
-            0 -> {
-                (holder as? CarHolder0)?.bind(car = Car(title = MassCar.titleList[index], description = "", imageIndex = index))
-                println(index)
-            }
-            2->{
-                (holder as? CarHolder2)?.bind(car = Car("", description = MassCar.descriptionList[index],null))
-                println(index)
-            }
+        if (carlist[position].viewType === VIEW_TYPE_ONE) {
+            (holder as CarHolder0).bind(position)
+        } else {
+            (holder as CarHolder1).bind(position)
         }
     }
 
     override fun getItemCount(): Int {
-        return carrList.size
+        return carlist.size
     }
 
     fun addCar(car: Car) {
-        carrList.add(car)
+        carlist.add(car)
         notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2 * 2
+        return carlist[position].viewType
     }
     interface OnCarClickListener {
         fun onCarClick(car: Car)

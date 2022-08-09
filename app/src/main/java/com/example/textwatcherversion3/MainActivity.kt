@@ -2,6 +2,7 @@
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.FrameLayout
 import com.example.textwatcherversion3.databinding.ActivityMainBinding
 import com.example.textwatcherversion3.screens.Fragment1
 import com.example.textwatcherversion3.screens.Fragment_2
@@ -10,6 +11,7 @@ import com.example.textwatcherversion3.screens.Fragment_2
     lateinit var binding: ActivityMainBinding
     private lateinit var communictor: Communictor
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
