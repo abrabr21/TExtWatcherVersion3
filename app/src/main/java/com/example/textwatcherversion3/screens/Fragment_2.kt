@@ -53,7 +53,7 @@ class Fragment_2 : Fragment() {
 //dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "10. Hi! I am in View 10"))
 //dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "11. Hi! I am in View 11"))
 //dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "12. Hi! I am in View 12"))
-        val adapter=CarAdapter(binding.root.context,dataList)
+        val adapter=CarAdapter(binding.root.context)
         recyclerView=binding.rcView
         recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
         recyclerView.adapter = adapter
