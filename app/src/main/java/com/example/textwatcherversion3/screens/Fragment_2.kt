@@ -21,64 +21,35 @@ class Fragment_2 : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         binding = Fragment2Binding.inflate(inflater)
-//        displayMessage = arguments?.getString("message")
-//        binding.displayMessage.text=displayMessage
-//        val adapter = CarAdapter(MainActivity, dataList)
-//        init()
         val dataList = ArrayList<AdapterModel>()
+
         for(i in 0..20){
              dataList.add(AdapterModel.CarModel(car = Car(1,"MB")))
              dataList.add(AdapterModel.ManualCarModel(manualCar = ManualCar("MB means Mercedes Benz")))
+        }
 
-        }
-//dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "1. Hi! I am in View 1"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "2. Hi! I am in View 2"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "3. Hi! I am in View 3"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "4. Hi! I am in View 4"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "5. Hi! I am in View 5"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "6. Hi! I am in View 6"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "7. Hi! I am in View 7"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "8. Hi! I am in View 8"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "9. Hi! I am in View 9"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "10. Hi! I am in View 10"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_ONE, "11. Hi! I am in View 11"))
-//dataList.add(Car(CarAdapter.VIEW_TYPE_TWO, "12. Hi! I am in View 12"))
-        val adapter=CarAdapter(binding.root.context,dataList)
-        recyclerView=binding.rcView
-        recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
-        recyclerView.adapter = adapter
         var itemFrag:DialogFragment=ItemFrag()
-        adapter.onItemClick={
-            val bundle =Bundle()
-//            bundle.putString("message",dataList[adapter.getIndex()].description)
-//            println(bundle.putString("message", dataList[adapter.getIndex()].description))
-            itemFrag.arguments=bundle
-            itemFrag.show(childFragmentManager,"")
-//            Log.d("LOG",dataList[adapter.getIndex()].description)
+        binding.rcView.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.rcView.adapter = CarAdapter(dataList).apply {
+            onItemClick = {
+                itemFrag.show(childFragmentManager,"dialog")
+            }
         }
+
+//        CarAdapter(dataList).onItemClick={
+//            val bundle =Bundle()
+//            itemFrag.show(childFragmentManager,"")
+//            TODO("Transfer information to child dialog fragment")
+//        }
+
         return binding.root
     }
-//    private fun init(){
-//        binding.apply {
-//
-//            rcView.layoutManager= LinearLayoutManager(context)
-//            rcView.adapter= adapter
-//            buttonAdd.setOnClickListener{
-//                if(index==2) index=0
-//                val car = Car("","",index)
-//                adapter.addCar(car)
-//                index++
-//            }
-//        }
-//    }
-
 }
