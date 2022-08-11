@@ -1,3 +1,3 @@
-package com.example.textwatcherversion3
-
-data class ManualCar(var description:String)
+//package com.example.textwatcherversion3
+//
+//data class ManualCar(var description:String)
