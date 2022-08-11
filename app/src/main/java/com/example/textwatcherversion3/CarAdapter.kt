@@ -16,11 +16,6 @@ class CarAdapter(private val arrayList: ArrayList<AdapterModel>): RecyclerView.A
 
     var onItemClick: ((AdapterModel) -> Unit)? = null
 
-    fun submitData(list : ArrayList<AdapterModel>){
-        arrayList.clear()
-        arrayList.addAll(list)
-    }
-
     private inner class ManualCarHolder(item: View) :
         RecyclerView.ViewHolder(item){
         var message: TextView? = itemView.findViewById(R.id.tvManual)
