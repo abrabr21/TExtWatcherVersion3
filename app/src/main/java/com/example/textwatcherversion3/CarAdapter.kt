@@ -29,25 +29,25 @@ class CarAdapter(private val arrayList: ArrayList<AdapterModel>): RecyclerView.A
                 onItemClick?.invoke(arrayList[layoutPosition])
             }
         }
-        fun onBindView(item: AdapterModel) {
+        fun onBindView(item: AdapterModel.ManualCar) {
             val recyclerViewModel = arrayList[layoutPosition]
-            message?.text = recyclerViewModel.toString()
+            message?.text = item.description
         }
 
     }
 
     private inner class CarHolder(item: View) :
         RecyclerView.ViewHolder(item) {
-        var message: TextView? = itemView.findViewById(R.id.textView)
-        var imageView:ImageView?=itemView.findViewById(R.id.imageItem2)
+        var message: TextView? = itemView.findViewById(R.id.tvTitle)
+        var imageView:ImageView?=itemView.findViewById(R.id.im)
         init {
             itemView.setOnClickListener {
-                onItemClick?.invoke(arrayList[layoutPosition])
+                onItemClick?.invoke(arrayList[adapterPosition])
             }
         }
-        fun onBindView(item: AdapterModel) {
+        fun onBindView(item: AdapterModel.Car) {
 //            val recyclerViewModel = arrayList[layoutPosition]
-            message?.text = (arrayList[layoutPosition] as Car).toString()
+            message?.text = item.description
             imageView?.setImageResource(R.drawable.pc2)
 
         }
@@ -66,8 +66,8 @@ class CarAdapter(private val arrayList: ArrayList<AdapterModel>): RecyclerView.A
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
        val item = arrayList[position]
         when(holder){
-            is CarHolder ->holder.onBindView(item as AdapterModel.CarModel)
-            is ManualCarHolder->holder.onBindView(item as AdapterModel.ManualCarModel)
+            is CarHolder ->(holder as CarHolder).onBindView(item as AdapterModel.Car)
+            is ManualCarHolder->(holder as ManualCarHolder).onBindView(item as AdapterModel.ManualCar)
         }
     }
 
@@ -80,12 +80,9 @@ class CarAdapter(private val arrayList: ArrayList<AdapterModel>): RecyclerView.A
     }
 
     override fun getItemViewType(position: Int): Int = when(arrayList[position]){
-        is AdapterModel.CarModel ->R.layout.car_item
-        is AdapterModel.ManualCarModel->R.layout.manual_car_item
+        is AdapterModel.Car ->R.layout.car_item
+        is AdapterModel.ManualCar->R.layout.manual_car_item
         null->throw IllegalStateException("unknown view")
     }
 
-    interface OnCarClickListener {
-        fun onCarClick(car: Car)
-    }
 }

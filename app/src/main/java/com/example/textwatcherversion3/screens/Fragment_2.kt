@@ -1,14 +1,11 @@
 package com.example.textwatcherversion3.screens
 
-import android.R
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.textwatcherversion3.*
@@ -32,15 +29,17 @@ class Fragment_2 : Fragment() {
         val dataList = ArrayList<AdapterModel>()
 
         for(i in 0..20){
-             dataList.add(AdapterModel.CarModel(car = Car(1,"MB")))
-             dataList.add(AdapterModel.ManualCarModel(manualCar = ManualCar("MB means Mercedes Benz")))
+             dataList.add(AdapterModel.Car ("MB",R.drawable.pc2))
+             dataList.add(AdapterModel.ManualCar("MB means Mercedes Benz"))
         }
 
         var itemFrag:DialogFragment=ItemFrag()
         binding.rcView.layoutManager = LinearLayoutManager(binding.root.context)
         binding.rcView.adapter = CarAdapter(dataList).apply {
             onItemClick = {
+
                 itemFrag.show(childFragmentManager,"dialog")
+
             }
         }
 
